@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,8 +18,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Route::get('success', function () {
+    return view('success');
+})->name('success');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('verify-account', [App\Http\Controllers\HomeController::class, 'verifyAccount'])->name('verifyAccount');
-Route::post('verifyotp', [App\Http\Controllers\HomeController::class, 'useractivation'])->name('verifyotp');
+Route::get('error', function () {
+    return view('error');
+})->name('error');
+
+
+Route::post('register', [RegisterController::class, 'register'])->name('register');
+
+Route::get('verify-otp', function () {
+    return view('verify');
+})->name('verify.otp');
+
+Route::post('verify-otp', [RegisterController::class, 'verifyOtp'])->name('verify.otp');
